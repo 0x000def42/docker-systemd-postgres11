@@ -1,0 +1,15 @@
+[Unit]
+Description=Postgres 11 dockerized serivice
+After=docker.service
+Requires=docker.service
+Documentation=https://github.com/0x000def42/docker-systemd-postgres11
+
+[Service]
+Type=simple 
+TimeoutSec=30
+ExecStart=/usr/bin/docker run -p 5432:5432 -v postgres11.service.data:/postgres_data --rm --name %n --env POSTGRES_PASSWORD=postgrespassword %n
+ExecStop=/usr/bin/docker stop %n
+ExecReload=/usr/bin/docker restart %n
+
+[Install]
+WantedBy=multi-user.target
